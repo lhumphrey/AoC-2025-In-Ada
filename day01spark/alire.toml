@@ -4,7 +4,7 @@ version = "0.1.0-dev"
 
 authors = ["Laura Humphrey"]
 maintainers = ["Laura Humphrey <example@example.com>"]
-licenses = "GNU GENERAL PUBLIC LICENSE Version 3"
+licenses =  "GPL-3.0-or-later"
 website = ""
 tags = []
 
