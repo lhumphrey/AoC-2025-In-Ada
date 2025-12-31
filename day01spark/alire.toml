@@ -1,0 +1,12 @@
+name = "day01spark"
+description = ""
+version = "0.1.0-dev"
+
+authors = ["Laura Humphrey"]
+maintainers = ["Laura Humphrey <example@example.com>"]
+licenses = "GNU GENERAL PUBLIC LICENSE Version 3"
+website = ""
+tags = []
+
+[[depends-on]]
+gnatprove = "^15.1.0"
