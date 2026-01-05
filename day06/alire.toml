@@ -1,0 +1,9 @@
+name = "day06"
+description = ""
+version = "0.1.0-dev"
+
+authors = ["Laura Humphrey"]
+maintainers = ["Laura Humphrey <example@example.com>"]
+licenses = "GPL-3.0-or-later"
+website = ""
+tags = []
