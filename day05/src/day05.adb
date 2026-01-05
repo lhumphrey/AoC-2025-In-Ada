@@ -1,14 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Integer_Text_IO;
 with GNAT.Regpat; use GNAT.Regpat;
 with SPARK.Containers.Formal.Vectors;
-with Ada.Containers; use Ada.Containers;
 with Helpers; use Helpers;
-
-with Ada.Strings.Fixed;
-with Ada.Strings;
-
-use Ada.Strings;
 
 procedure Day05 is
 
@@ -21,11 +14,11 @@ procedure Day05 is
    Filename : constant String := "input.txt";
    File : File_Type;
    S : String (1 .. 64) with Relaxed_Initialization;
-   Idx, Last_Idx, Dummy_Idx : Natural;
+   Last_Idx, Dummy_Idx : Natural;
 
    Range_Matcher : constant Pattern_Matcher := Compile ("(\d+)-(\d+)");
    Range_Matches : Match_Array (0 .. 2);
-   Id_Ranges : Id_Range_Vectors.Vector (256);
+   Fresh_Ranges : Id_Range_Vectors.Vector (256);
    Ids : Long_Integer_Vectors.Vector (1024);
    Count1 : Integer := 0;
    Count2 : Long_Integer := 0;
@@ -50,10 +43,10 @@ begin
       if Range_Matches (1) = No_Match or else Range_Matches (2) = No_Match then
          exit;
       else
-         Append (Id_Ranges,
+         Append (Fresh_Ranges,
                  Id_Range'(
-                  Long_Integer'Value(S (Range_Matches (1).First .. Range_Matches (1).Last)),
-                  Long_Integer'Value(S (Range_Matches (2).First .. Range_Matches (2).Last))));
+                  Long_Integer'Value (S (Range_Matches (1).First .. Range_Matches (1).Last)),
+                  Long_Integer'Value (S (Range_Matches (2).First .. Range_Matches (2).Last))));
       end if;
    end loop;
 
@@ -62,16 +55,15 @@ begin
       Append (Ids, Long_Integer'Value (S (1 .. Last_Idx)));
    end loop;
 
-   for E of Ids loop
-      if In_A_Fresh_Range (Id_Ranges, E) then
+   for Id of Ids loop
+      if In_A_Fresh_Range (Fresh_Ranges, Id) then
          Count1 := Count1 + 1;
       end if;
    end loop;
 
-   Make_Fresh_Ranges_Non_Overlapping (Id_Ranges);
+   Make_Fresh_Ranges_Non_Overlapping (Fresh_Ranges);
 
-   for Interval of Id_Ranges loop
-      -- Put_Line (Ada.Strings.Fixed.Trim (Interval (1)'Image, Both) & "-" & Ada.Strings.Fixed.Trim (Interval (2)'Image, Both));
+   for Interval of Fresh_Ranges loop
       Count2 := Count2 + Interval (2) - Interval (1) + 1;
    end loop;
 
